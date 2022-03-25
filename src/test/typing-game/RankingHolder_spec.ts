@@ -1,6 +1,6 @@
 import "mocha";
 import { expect } from "chai";
-import { RankingHolder } from "../lib/RankingHolder";
+import { RankingHolder } from "../../lib/typing-game/RankingHolder";
 
 describe("RankingHolder", () => {
     describe("average", () => {

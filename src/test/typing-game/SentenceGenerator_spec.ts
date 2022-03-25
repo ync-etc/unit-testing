@@ -2,8 +2,8 @@ import "mocha";
 import { expect } from "chai";
 import sinon from "sinon";
 import path from "path";
-import { SentenceGenerator } from "../lib/SentenceGenerator";
-import * as generator from "../lib/SentenceFileLoader";
+import { SentenceGenerator } from "../../lib/typing-game/SentenceGenerator";
+import * as generator from "../../lib/typing-game/SentenceFileLoader";
 
 describe("SentenceGenerator", () => {
     let instance: SentenceGenerator;
@@ -48,7 +48,7 @@ describe("SentenceGenerator", () => {
             before(() => {
                 originalEnv = { ...process.env };
                 // src/test/res/files
-                process.env.CONFIG_DIR = path.join(__dirname, "res/files");
+                process.env.CONFIG_DIR = path.join(__dirname, "../res/files");
             });
 
             after(() => {

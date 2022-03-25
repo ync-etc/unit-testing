@@ -1,13 +1,13 @@
 import "mocha";
 import { expect } from "chai";
-import { loadSentenceFiles } from "../lib/SentenceFileLoader";
+import { loadSentenceFiles } from "../../lib/typing-game/SentenceFileLoader";
 import path from "path";
 
 describe("SentenceFileLoader", () => {
     describe("loadSentenceFiles", () => {
         context('there is no file', () => {
             it("should return empty array", async () => {
-                const dir = path.join(__dirname, "./res/empty");
+                const dir = path.join(__dirname, "../res/empty");
                 const result = await loadSentenceFiles(dir);
                 expect(result).to.be.empty;
             });
@@ -16,7 +16,7 @@ describe("SentenceFileLoader", () => {
         context('there are 3 files', () => {
             let dir: string;
             beforeEach(() => {
-                dir = path.join(__dirname, "./res/files");
+                dir = path.join(__dirname, "../res/files");
             });
 
             it("should return 3 length of array", async () => {
