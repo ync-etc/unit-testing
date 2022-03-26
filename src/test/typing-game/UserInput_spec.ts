@@ -41,6 +41,22 @@ describe("UserInput", () => {
                 // the received text doesn't contain \r, \n, \r\n
                 return expect(result).to.eventually.equal("user input text");
             });
+
+            // without chai-as-promised
+            it("should resolve with user input", (done) => {
+                promptUserInput("my question").then((result) => {
+                    try {
+                        expect(result).to.equal("user input text");
+                        done();
+                    } catch (e) {
+                        done(e);
+                    }
+                });
+
+                // it doesn't trigger without \r, \n or \r\n
+                const input = "user input text\r";
+                process.stdin.emit("data", input);
+            });
         });
     });
 });
