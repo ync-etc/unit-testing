@@ -17,13 +17,14 @@ describe("UserInput", () => {
 
     describe("promptUserInput", () => {
         context("question is default value", () => {
-            it("should call question function with empty string", () => {
+            it("should call question function with empty string", async () => {
                 const rl = readline.createInterface(process.stdin);
-                sinon.stub(readline, "createInterface").returns(rl);
                 const stub = sinon.stub(rl, "question");
-                stub.resolves();
+                // It triggers a callback when question function is called
+                stub.callsFake(() => stub.yield("user input value"));
+                sinon.stub(readline, "createInterface").returns(rl);
 
-                promptUserInput();
+                await promptUserInput();
 
                 expect(stub.calledWith("", sinon.match.any)).to.be.true;
             });
