@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "typing": "ts-node ./src/lib/typing-game/app.ts",
     "test": "mocha --require ts-node/register src/test/**/*_spec.ts"
   },
   "repository": {
