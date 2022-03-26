@@ -7,7 +7,7 @@ export function promptUserInput(question = ""): Promise<string> {
             output: process.stdout
         });
 
-        rl.question(question + "\n", (userInput: string) => {
+        rl.question(question, (userInput: string) => {
             rl.close();
             resolve(userInput);
         });
