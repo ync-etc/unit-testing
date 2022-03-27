@@ -1,7 +1,9 @@
 import "mocha";
 import { expect } from "chai";
+import sinon from "sinon";
 import { loadSentenceFiles } from "../../lib/typing-game/SentenceFileLoader";
 import path from "path";
+import fs from "fs";
 
 describe("SentenceFileLoader", () => {
     describe("loadSentenceFiles", () => {
@@ -34,6 +36,53 @@ describe("SentenceFileLoader", () => {
             it("should contain 12.txt contents in the first index", async () => {
                 const result = await loadSentenceFiles(dir);
                 expect(result[2]).to.deep.equal(["CC 1", "CC 2", "CC 3"]);
+            });
+        });
+
+        describe('stub functions of fs modules', () => {
+            let readdirStub: sinon.SinonStub;
+            let readFileStub: sinon.SinonStub;
+
+            beforeEach(() => {
+                readdirStub = sinon.stub(fs.promises, "readdir");
+                readFileStub = sinon.stub(fs.promises, "readFile");
+            });
+
+            afterEach(() => {
+                readdirStub.restore();
+                readFileStub.restore();
+            });
+
+            [
+                "12.txt",
+                "0x123.txt",
+            ].forEach((filename) => {
+                it(`should contain files whose filename is a number (${filename})`, async () => {
+                    readdirStub.resolves([filename] as any);
+                    readFileStub.resolves("aaa\r\nbbb\r\n");
+                    await loadSentenceFiles("dir");
+                    expect(readFileStub.calledWith(`dir\\${filename}`)).to.be.true;
+                });
+            });
+
+            it(`should not contain files whose filename is not a number`, async () => {
+                readdirStub.resolves(["foo.txt"] as any);
+                readFileStub.resolves("aaa\r\nbbb\r\n");
+                await loadSentenceFiles("dir");
+                expect(readFileStub.notCalled).to.be.true;
+            });
+
+            it(`should sort file array by ascending`, async () => {
+                readdirStub.resolves([
+                    "12.txt",
+                    "4.txt",
+                    "3.txt",
+                ] as any);
+                readFileStub.resolves("aaa\r\nbbb\r\n");
+                await loadSentenceFiles("dir");
+                expect(readFileStub.firstCall.calledWith(`dir\\3.txt`)).to.be.true;
+                expect(readFileStub.secondCall.calledWith(`dir\\4.txt`)).to.be.true;
+                expect(readFileStub.thirdCall.calledWith(`dir\\12.txt`)).to.be.true;
             });
         });
     });
