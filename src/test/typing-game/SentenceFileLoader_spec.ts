@@ -58,7 +58,7 @@ describe("SentenceFileLoader", () => {
                 "0x123.txt",
             ].forEach((filename) => {
                 it(`should contain files whose filename is a number (${filename})`, async () => {
-                    readdirStub.resolves([filename] as any);
+                    readdirStub.resolves([filename]);
                     readFileStub.resolves("aaa\r\nbbb\r\n");
                     await loadSentenceFiles("dir");
                     expect(readFileStub.calledWith(`dir\\${filename}`)).to.be.true;
@@ -66,7 +66,7 @@ describe("SentenceFileLoader", () => {
             });
 
             it(`should not contain files whose filename is not a number`, async () => {
-                readdirStub.resolves(["foo.txt"] as any);
+                readdirStub.resolves(["foo.txt"]);
                 readFileStub.resolves("aaa\r\nbbb\r\n");
                 await loadSentenceFiles("dir");
                 expect(readFileStub.notCalled).to.be.true;
@@ -77,7 +77,7 @@ describe("SentenceFileLoader", () => {
                     "12.txt",
                     "4.txt",
                     "3.txt",
-                ] as any);
+                ]);
                 readFileStub.resolves("aaa\r\nbbb\r\n");
                 await loadSentenceFiles("dir");
                 expect(readFileStub.firstCall.calledWith(`dir\\3.txt`)).to.be.true;
