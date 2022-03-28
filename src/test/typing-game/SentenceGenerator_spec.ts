@@ -42,11 +42,14 @@ describe("SentenceGenerator", () => {
 
             before(() => {
                 originalEnv = { ...process.env };
+            });
+
+            beforeEach(() => {
                 // src/test/res/files
                 process.env.CONFIG_DIR = path.join(__dirname, "../res/files");
             });
 
-            after(() => {
+            afterEach(() => {
                 process.env = { ...originalEnv };
             });
 
