@@ -23,11 +23,6 @@ describe("SentenceGenerator", () => {
     });
 
     describe("generate", () => {
-        it("should not throw an error", () => {
-            const result = () => instance.load();
-            expect(result).not.to.throw;
-        });
-
         describe("load + generate", () => {
             it("should generate a sentence with space and dot", async () => {
                 sinon.stub(generator, "loadSentenceFiles")
