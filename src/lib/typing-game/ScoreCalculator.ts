@@ -30,8 +30,6 @@ export function calculateScore(args: ScoreInput): number {
             return (args.original.length - diffCount) / args.original.length;
         }
     };
-    // const correctRate = diffCount === 0 ? 1 :
-    //     (args.original.length - diffCount) / args.original.length;
     const correctRate = calculateCorrectRate();
 
     return 10000 * correctRate / Math.sqrt(args.time);
