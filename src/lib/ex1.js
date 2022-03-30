@@ -9,3 +9,4 @@ function average(array) {
 console.log(average([1,2,3,4,5])); // 3
 console.log(average(["1","2","3","4","5"])); // 2469
 console.log(average([])); // NaN
+console.log(average([1, 2, "3", 4])); // 83.5
