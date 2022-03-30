@@ -25,13 +25,15 @@ describe("ScoreCalculator", () => {
         });
 
         context('when user input matches original', () => {
-            it("should return 10000 when time is 1", () => {
-                const result = calculateScore({
-                    original: "input",
-                    userInput: "input",
-                    time: 1,
+            [0.5, 1].forEach((time) => {
+                it(`should return 10000 when time is ${time}`, () => {
+                    const result = calculateScore({
+                        original: "input",
+                        userInput: "input",
+                        time,
+                    });
+                    expect(result).to.equal(10000);
                 });
-                expect(result).to.equal(10000);
             });
 
             it("should return 5000 when time is 4", () => {
@@ -67,6 +69,14 @@ describe("ScoreCalculator", () => {
                     const result = calculateScore({
                         original: "abcd",
                         userInput: "",
+                        time: 1,
+                    });
+                    expect(result).to.equal(0);
+                });
+                it("should return 0 when incorrect count is bigger than the original length", () => {
+                    const result = calculateScore({
+                        original: "abcd",
+                        userInput: "xxxxyyyy",
                         time: 1,
                     });
                     expect(result).to.equal(0);

@@ -24,7 +24,7 @@ export function calculateScore(args: ScoreInput): number {
     const calculateCorrectRate = () => {
         if (diffCount === 0) {
             return 1;
-        } else if (args.original.length === 0) {
+        } else if (args.original.length === 0 || args.original.length < diffCount) {
             return 0;
         } else {
             return (args.original.length - diffCount) / args.original.length;
@@ -32,5 +32,7 @@ export function calculateScore(args: ScoreInput): number {
     };
     const correctRate = calculateCorrectRate();
 
-    return 10000 * correctRate / Math.sqrt(args.time);
+    const time = args.time <= 1 ? 1 : Math.sqrt(args.time);
+
+    return 10000 * correctRate / time;
 }
