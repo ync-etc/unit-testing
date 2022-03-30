@@ -63,6 +63,14 @@ describe("ScoreCalculator", () => {
                     });
                     expect(result).to.equal(5000);
                 });
+                it("should return 0 when userInput is empty", () => {
+                    const result = calculateScore({
+                        original: "abcd",
+                        userInput: "",
+                        time: 1,
+                    });
+                    expect(result).to.equal(0);
+                });
                 it("should return 5000 when userInput has half length extra input", () => {
                     const result = calculateScore({
                         original: "abcd",
