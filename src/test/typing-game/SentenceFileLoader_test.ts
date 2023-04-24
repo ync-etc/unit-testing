@@ -23,6 +23,7 @@ describe("SentenceFileLoader", () => {
 
             it("should return 3 length of array", async () => {
                 const result = await loadSentenceFiles(dir);
+                console.log({result})
                 expect(result).to.be.lengthOf(3)
             });
             it("should contain 1.txt contents in the first index", async () => {
@@ -61,7 +62,9 @@ describe("SentenceFileLoader", () => {
                     readdirStub.resolves([filename]);
                     readFileStub.resolves("aaa\r\nbbb\r\n");
                     await loadSentenceFiles("dir");
-                    expect(readFileStub.calledWith(`dir\\${filename}`)).to.be.true;
+                    //expect(readFileStub.calledWith(`dir\\${filename}`)).to.be.true;
+                    expect(readFileStub.calledWith(`dir/${filename}`)).to.be.true;
+                    //expect(readFileStub.called).to.be.true;
                 });
             });
 
@@ -80,9 +83,10 @@ describe("SentenceFileLoader", () => {
                 ]);
                 readFileStub.resolves("aaa\r\nbbb\r\n");
                 await loadSentenceFiles("dir");
-                expect(readFileStub.firstCall.calledWith(`dir\\3.txt`)).to.be.true;
-                expect(readFileStub.secondCall.calledWith(`dir\\4.txt`)).to.be.true;
-                expect(readFileStub.thirdCall.calledWith(`dir\\12.txt`)).to.be.true;
+                expect(readFileStub.firstCall.calledWith(`dir/3.txt`)).to.be.true;
+                expect(readFileStub.secondCall.calledWith(`dir/4.txt`)).to.be.true;
+                expect(readFileStub.thirdCall.calledWith(`dir/12.txt`)).to.be.true;
+                expect(readFileStub.getCall(1).calledWith(`dir/4.txt`)).to.be.true;
             });
         });
     });

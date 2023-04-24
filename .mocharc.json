@@ -1,0 +1,7 @@
+{
+  "extension": ["ts"],
+  "spec": "src/test/**/*_test.ts",
+  "require": "ts-node/register",
+  "delay": false,
+  "bail": true
+}

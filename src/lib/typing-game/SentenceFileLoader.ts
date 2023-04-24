@@ -20,8 +20,10 @@ export async function loadSentenceFiles(dir: string): Promise<Sentences> {
     let result: Sentences = [];
     for (let i = 0; i < numberFiles.length; i++) {
         const filePath = path.join(dir, numberFiles[i]);
+        //console.log({filePath})
         const contents = await fs.promises.readFile(filePath, "utf-8");
-        const sentences = contents.split("\r\n");
+        //const sentences = contents.split("\r\n");  //windows: \r\n 
+        const sentences = contents.split(/\r?\n/);   //unix: \n
         result.push(sentences);
     }
     return result;
